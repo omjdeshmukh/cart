@@ -100,7 +100,7 @@ function App() {
             temp.cart = true;
             temp.count = temp.count + 1;
           }
-          return tempItem;
+          return temp;
         }),
       ];
     });
@@ -118,22 +118,25 @@ function App() {
             temp.cart = temp.count === 0 ? true : false;
             temp.count = temp.count - 1;
           }
-          return tempItem;
+          return temp;
         }),
       ];
     });
   };
 
   const clearAll = () => {
-    setItems(
-      items.map((x) => {
-        return {
-          ...x,
-          count: 0,
-          cart: false,
-        };
-      })
-    );
+    setItems((state) => {
+      const tempItem = [...state];
+      return [
+        ...tempItem,
+        tempItem.map((x) => {
+          const temp = x;
+          temp.cart = false;
+          temp.count = 0;
+          return temp;
+        }),
+      ];
+    });
   };
 
   return (
